@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" >
+	<head>
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <link rel="stylesheet" type="text/css" href="/lib/angular-material/angular-material.css">
+		<link rel="stylesheet" type="text/css" href="/css/styles.css">
+		<link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:300,900' rel='stylesheet' type='text/css'>
+	</head>
+	<body notify-resize ng-app="DepressingMemory" class="flexbox-parent" layout="column" layout-align="center center" ng-cloak="">
+
+		<div id="header">
+			depressingMemory.com
+		</div>
+
+		<div id="card-area" style="font-size: 4vmin;" ng-controller="CardsAreaController" layout="row" layout-align="center center" layout-wrap >
+			<div ng-repeat="card in cards" >
+				<div class="card {{card.isFlipped ? 'card-flipped' : ''}}" ng-click="flipCard(card)">
+					<md-card class="card-back"></md-card>
+					<md-card class="card-front" layout="column" layout-align="center start">
+						<span ng-repeat="word in card.words" ng-bind="word">
+						</span>
+					</md-card>
+				</div>
+			</div>
+		</div>
+
+		<div id="sidebar" ng-controller="SidebarController" >
+			<md-radio-group ng-model="difficulty" layout="row" ng-change='updateDifficulty()' >
+	      <md-radio-button ng-repeat="level in difficultyLevels" ng-value="level"  aria-label="level.title">
+					<span ng-bind="level.title"></span>
+				</md-radio-button>
+	    </md-radio-group>
+		</div>
+
+		<!--Angular stuff-->
+	  <script type="text/javascript" src="/lib/angular/angular.js"></script>
+	  <script type="text/javascript" src="/lib/angular-animate/angular-animate.js"></script>
+	  <script type="text/javascript" src="/lib/angular-aria/angular-aria.js"></script>
+	  <script type="text/javascript" src="/lib/angular-messages/angular-messages.js"></script>
+	  <script type="text/javascript" src="/lib/angular-material/angular-material.js"></script>
+
+		<!--DepressingMemory-->
+	  <script type="text/javascript" src="/js/app.js"></script>
+	</body>
+</html>

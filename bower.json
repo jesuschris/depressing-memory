@@ -1,0 +1,11 @@
+{
+  "name": "depressing-memory",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "angular": "1.5.5",
+    "angular-animate": "1.5.5",
+    "angular-touch": "1.5.5",
+    "angular-material": "^1.0.9"
+  }
+}
