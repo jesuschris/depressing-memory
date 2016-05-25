@@ -2,6 +2,9 @@
   "name": "depressing-memory",
   "version": "0.0.1",
   "description": "A memory game that pulls content from wikipedia articles",
+  "scripts": {
+    "start": "node server/server.js"
+  },
   "main": "server/server.js",
   "author": "Chris",
   "dependencies": {
