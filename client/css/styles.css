@@ -28,7 +28,7 @@ html, body{
   height:7em;
   border-radius: 0.25em;
   -webkit-transform-style: preserve-3d;
-  -webkit-transition: 0.5s;
+  -webkit-transition: 0.25s;
 }
 
 .card > md-card{

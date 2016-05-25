@@ -93,9 +93,7 @@ app.controller("CardsAreaController", function($scope, $window, $http, $timeout,
               card.isFlipped = false;
               $scope.pendingCard.isFlipped = false;
               $scope.pendingCard = null;
-              $timeout(function() {
-                $scope.canFlip = true;
-              }, 500);
+              $scope.canFlip = true;
             }, 1000);
           }
         }
