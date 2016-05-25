@@ -12,7 +12,7 @@
 			depressingMemory.com
 		</div>
 
-		<div id="card-area" style="font-size: 4vmin;" ng-controller="CardsAreaController" layout="row" layout-align="center center" layout-wrap >
+		<div id="card-area" style="font-size: {{ (4 / (cards.length / 10)) + 1 }}vmin;" ng-controller="CardsAreaController" layout="row" layout-align="center center" layout-wrap >
 			<div ng-repeat="card in cards" >
 				<div class="card {{card.isFlipped ? 'card-flipped' : ''}}" ng-click="flipCard(card)">
 					<md-card class="card-back"></md-card>
