@@ -4,7 +4,7 @@
 	  <meta name="viewport" content="width=device-width, initial-scale=1">
 	  <link rel="stylesheet" type="text/css" href="/lib/angular-material/angular-material.css">
 		<link rel="stylesheet" type="text/css" href="/css/styles.css">
-		<link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:300,900' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=News+Cycle' rel='stylesheet' type='text/css'>
 	</head>
 	<body notify-resize ng-app="DepressingMemory" class="flexbox-parent" layout="column" layout-align="center center" ng-cloak="">
 
@@ -15,10 +15,11 @@
 		<div id="card-area" style="font-size: {{ (4 / (cards.length / 10)) + 1 }}vmin;" ng-controller="CardsAreaController" layout="row" layout-align="center center" layout-wrap >
 			<div ng-repeat="card in cards" >
 				<div class="card {{card.isFlipped ? 'card-flipped' : ''}}" ng-click="flipCard(card)">
-					<md-card class="card-back"></md-card>
-					<md-card class="card-front" layout="column" layout-align="center start">
-						<span ng-repeat="word in card.words" ng-bind="word">
-						</span>
+					<md-card class="card-back">
+						<div class="card-back-image"></div>
+					</md-card>
+					<md-card class="card-front" layout="row" layout-align="center center" layout-wrap>
+						<span ng-bind="card.title"></span>
 					</md-card>
 				</div>
 			</div>

@@ -9,8 +9,7 @@ html, body{
 
 #header{
   font-size: 24px;
-  font-family: 'Source Code Pro';
-  font-weight: 300;
+  font-family: 'News Cycle', sans-serif;
 }
 
 /* Cards */
@@ -20,9 +19,10 @@ html, body{
 }
 
 .card{
-  font-family: 'Source Code Pro';
-  font-weight: 900;
-  word-wrap: break-word;
+  font-family: 'News Cycle', sans-serif;
+  word-wrap: normal;
+  text-align: center; 
+  line-height: 1.2em;
   margin: 0.25em;
   width:5em;
   height:7em;
@@ -33,17 +33,14 @@ html, body{
 
 .card > md-card{
   margin: 0;
-  overflow: hidden;
-  padding: 0.25em;
   border-radius: 0.25em;
-  border: 0.25em solid #FFF;
 }
 
 .card-flipped{
   -webkit-transform: rotateY(180deg);
 }
 
-.card-back, .card-front{
+.card-back, .card-front, .card-back-image{
   width: 100%;
   height: 100%;
   -webkit-backface-visibility: hidden ;
@@ -51,15 +48,23 @@ html, body{
 }
 
 .card-back{
+  border: 0.25em solid #FFF;
   position: absolute;
   z-index: 1;
-  background-image: url("../img/pattern.png");
+}
+
+.card-back-image{
+  border: 0.075em solid #111;
+  border-radius: 0.15em;
+  margin: -0.075em;
+  background-image: url("../img/pattern3.png");
   background-position: center;
 }
 
 .card-front{
+  overflow: hidden;
+  padding: 0.25em;
   background-color: #FFF;
   color: #111;
-  font-weight: bold;
   -webkit-transform: rotateY(-180deg);
 }
