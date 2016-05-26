@@ -13,10 +13,102 @@ var shuffleCards = function(cards) {
   return cards;
 }
 
+var theme;
+
 /* App */
 
-var app = angular.module('DepressingMemory', ['ngMaterial'])
+var app = angular.module('DepressingMemory', ['ngMaterial','ngMessages'])
+  .config(function($mdThemingProvider) {
+    var customPrimary = {
+         '50': '#dcdbe7',
+         '100': '#cdccdc',
+         '200': '#bebdd2',
+         '300': '#afadc8',
+         '400': '#a09ebd',
+         '500': '918FB3',
+         '600': '#8280a9',
+         '700': '#73719e',
+         '800': '#666392',
+         '900': '#5b5983',
+         'A100': '#ebeaf1',
+         'A200': '#f9f9fb',
+         'A400': '#ffffff',
+         'A700': '#514f74'
+     };
+     $mdThemingProvider
+         .definePalette('customPrimary',
+                         customPrimary);
+
+     var customAccent = {
+         '50': '#201d28',
+         '100': '#2c2737',
+         '200': '#383246',
+         '300': '#443c55',
+         '400': '#504764',
+         '500': '#5c5173',
+         '600': '#746791',
+         '700': '#81749d',
+         '800': '#8f83a7',
+         '900': '#9c92b2',
+         'A100': '#746791',
+         'A200': '685C82',
+         'A400': '#5c5173',
+         'A700': '#aaa1bc'
+     };
+     $mdThemingProvider
+         .definePalette('customAccent',
+                         customAccent);
+
+     var customWarn = {
+         '50': '#d0b5d3',
+         '100': '#c6a5ca',
+         '200': '#bc95c0',
+         '300': '#b185b7',
+         '400': '#a775ad',
+         '500': '9D65A4',
+         '600': '#905997',
+         '700': '#804f87',
+         '800': '#714676',
+         '900': '#623d66',
+         'A100': '#dac5dd',
+         'A200': '#e4d5e6',
+         'A400': '#efe5f0',
+         'A700': '#523356'
+     };
+     $mdThemingProvider
+         .definePalette('customWarn',
+                         customWarn);
+
+     var customBackground = {
+         '50': '#ffffff',
+         '100': '#ffffff',
+         '200': '#ffffff',
+         '300': '#ffffff',
+         '400': '#f9fbfb',
+         '500': 'E9F1F2',
+         '600': '#d9e7e9',
+         '700': '#c9dddf',
+         '800': '#b9d2d6',
+         '900': '#a9c8cc',
+         'A100': '#ffffff',
+         'A200': '#ffffff',
+         'A400': '#ffffff',
+         'A700': '#99bec3'
+     };
+     $mdThemingProvider
+         .definePalette('customBackground',
+                         customBackground);
+
+   $mdThemingProvider.theme('default')
+       .primaryPalette('customPrimary')
+       .accentPalette('customAccent')
+       .warnPalette('customWarn')
+       .backgroundPalette('customBackground')
+
+    theme = $mdThemingProvider._THEMES;
+  })
   .factory('appState', function () {
+
       //Observer pattern
       var _observers = [];
 
@@ -37,7 +129,19 @@ var app = angular.module('DepressingMemory', ['ngMaterial'])
           "timeLimit" : 240000
         }
       ];
-      var difficulty = difficultyLevels[0];
+      var difficulty = difficultyLevels[1];
+
+      var depressingnessLevels = [
+        {
+          "id" : 0,
+          "title" : "Sad"
+        },
+        {
+          "id" : 1,
+          "title" : "Reality Sad"
+        }
+      ];
+      var depressingness = depressingnessLevels[0];
 
       var updateObservers = function(message){
         angular.forEach(_observers, function (callBack) {
@@ -58,11 +162,80 @@ var app = angular.module('DepressingMemory', ['ngMaterial'])
         setDifficulty: function (value) {
           difficulty = value;
           updateObservers("difficulty");
+        },
+        getDepressingness: function() {
+            return depressingness;
+        },
+        getDepressingnessLevels: function() {
+            return depressingnessLevels;
+        },
+        setDepressingness: function (value) {
+          depressingness = value;
+          updateObservers("depressingness");
         }
       };
   });
 
 /* Controllers */
+
+app.controller("AppController", function($scope, appState){
+
+  $scope.pages = "";
+
+});
+
+app.controller("SetupMenuController", function($scope, $interval, $timeout, appState) {
+
+  $scope.cards = [
+    {"text":"depressing","isFlipped":false},
+    {"text":"memory","isFlipped":false},
+    {"text":".com","isFlipped":false},
+  ];
+
+  var currentTitleCard = 0;
+  var flipTitleCard = function() {
+    if(currentTitleCard >= $scope.cards.length){
+      currentTitleCard = 0;
+    }
+    var card = $scope.cards[currentTitleCard];
+    card.isFlipped = !card.isFlipped;
+    currentTitleCard++;
+  }
+  var flipCardsSequence = function(timeBetweenFlips) {
+    flipTitleCard();
+    $timeout(function(){
+      flipTitleCard();
+    },timeBetweenFlips);
+    $timeout(function(){
+      flipTitleCard();
+    },timeBetweenFlips*2);
+  }
+
+  $timeout(function(){
+    flipCardsSequence(200);
+    $interval(function(){
+      flipCardsSequence(500);
+      $timeout(function(){
+        flipCardsSequence(50);
+      },2000);
+    }, 5000);
+  },500)
+
+  $scope.difficultyLevels = appState.getDifficultyLevels();
+  $scope.difficulty = appState.getDifficulty();
+
+  $scope.depressingnessLevels = appState.getDepressingnessLevels();
+  $scope.depressingness = appState.getDepressingness();
+
+  $scope.name = "";
+
+  $scope.startGame = function(type){
+    if(type === "solo" || type === "paired"){
+
+    }
+  }
+
+});
 
 app.controller("CardsAreaController", function($scope, $window, $http, $timeout, appState) {
 
@@ -116,11 +289,11 @@ app.controller("CardsAreaController", function($scope, $window, $http, $timeout,
     $scope.$apply();
   });
 
-  var getCards = function(pairs){
+  var getCards = function(numPairs){
     $http({
       url: "api/cards",
       method: "GET",
-      params: { pairs: pairs }
+      params: { num: numPairs }
     })
       .then(function(res){
         var data = res.data;
@@ -177,26 +350,14 @@ app.controller("CardsAreaController", function($scope, $window, $http, $timeout,
         console.log(err);
       });
     };
-
+    getCards(appState.getDifficulty().pairs);
     appState.observe(function(message){
       if(message === "difficulty"){
-        getCards(appState.getDifficulty().pairs);
+        //getCards(appState.getDifficulty().pairs);
       }
     });
 
 });
-
-app.controller("SidebarController", function($scope, appState) {
-
-  $scope.difficultyLevels = appState.getDifficultyLevels();
-  $scope.difficulty = appState.getDifficulty();
-
-  $scope.updateDifficulty = function(){
-    appState.setDifficulty($scope.difficulty);
-  }
-
-});
-
 /* Directives */
 
 /* Filters */

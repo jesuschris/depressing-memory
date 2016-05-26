@@ -2,35 +2,174 @@
 <html lang="en" >
 	<head>
 	  <meta name="viewport" content="width=device-width, initial-scale=1">
+		<style>
+			.app-loader {
+			  position: absolute;
+			  top: 50%;
+			  left: 50%;
+			  -webkit-transform: translate(-50%, -50%);
+			  -ms-transform: translate(-50%, -50%);
+			  transform: translate(-50%, -50%);
+
+			  color: #FFF;
+			  text-align: center;
+
+			  -webkit-perspective: 30em;
+			  -ms-perspective: 30em;
+			  perspective: 30em;
+			  -webkit-transform-style: preserve-3d;
+			  -ms-transform-style: preserve-3d;
+			   transform-style: preserve-3d;
+
+				 opacity: 1;
+				 -webkit-transition: opacity 0.1s ease;
+				 -ms-transition: opacity 0.1s ease;
+				 transition: opacity 0.1s ease;
+			}
+
+			.app-loader.loaded {
+				 opacity: 0;
+			}
+
+			.app-loader-card {
+			  width: 5em;
+			  height: 7em;
+			  border-radius: 0.25em;
+			  border: 0.25em solid white;
+			  -webkit-animation: appLoaderFlip 1.5s infinite;
+			  -webkit-animation-timing-function: linear;
+			  -ms-animation: appLoaderFlip 1.5s infinite;
+			  -ms-animation-timing-function: linear;
+			  animation: appLoaderFlip 1.5s infinite;
+			  animation-timing-function: linear;
+			}
+
+			@-webkit-keyframes appLoaderFlip {
+			  0% { -webkit-transform: rotateY(180deg); background-color: rgb(104,92,130); }
+			  24% { background-color: rgb(104,92,130); }
+			  25% { background-color: white; }
+			  50%{ -webkit-transform: rotateY(0deg); background-color: white; }
+			  74% { background-color: white; }
+			  75% { background-color: rgb(104,92,130); }
+			  100% { -webkit-transform: rotateY(-180deg); background-color: rgb(104,92,130); }
+			}
+
+			@-ms-keyframes appLoaderFlip {
+			  0% { -ms-transform: rotateY(180deg); background-color: rgb(104,92,130); }
+			  24% { background-color: rgb(104,92,130); }
+			  25% { background-color: white; }
+			  50%{ -ms-transform: rotateY(0deg); background-color: white; }
+			  74% { background-color: white; }
+			  75% { background-color: rgb(104,92,130); }
+			  100% { -ms-transform: rotateY(-180deg); background-color: rgb(104,92,130); }
+			}
+
+			@keyframes appLoaderFlip {
+			    0% { transform: rotateY(180deg); background-color: rgb(104,92,130); }
+			    24% { background-color: rgb(104,92,130); }
+			    25% { background-color: white; }
+			    50%{ transform: rotateY(0deg); background-color: white; }
+			    74% { background-color: white; }
+			    75% { background-color: rgb(104,92,130); }
+			    100% { transform: rotateY(-180deg); background-color: rgb(104,92,130); }
+			}
+		</style>
 	  <link rel="stylesheet" type="text/css" href="/lib/angular-material/angular-material.css">
 		<link rel="stylesheet" type="text/css" href="/css/styles.css">
 		<link href='https://fonts.googleapis.com/css?family=News+Cycle' rel='stylesheet' type='text/css'>
 	</head>
-	<body ng-app="DepressingMemory" class="flexbox-parent" layout="column" layout-align="center center" ng-cloak="">
-
-		<div id="header">
-			depressingMemory.com
-		</div>
-
-		<div id="card-area" style="font-size: {{ (4 / (cards.length / 8)) + 1 }}vmin;" ng-controller="CardsAreaController" layout="row" layout-align="center center" layout-wrap >
-			<div class="card-container" ng-repeat="card in cards" >
-				<div class="card {{card.isFlipped ? 'card-flipped' : ''}}" ng-click="flipCard(card)">
-					<md-card class="md-whiteframe-3dp card-back">
-						<div class="card-back-image"></div>
-					</md-card>
-					<md-card class="md-whiteframe-6dp card-front" layout="row" layout-align="center center" layout-wrap>
-						<span style="font-size:{{card.fontSize}};" ng-bind="card.title"></span>
-					</md-card>
-				</div>
+	<body ng-app="DepressingMemory">
+		<div class="app-loader" ng-class="{loaded:true}">
+			<div class="app-loader-card">
 			</div>
 		</div>
-
-		<div id="sidebar" ng-controller="SidebarController" >
-			<md-radio-group ng-model="difficulty" layout="row" ng-change='updateDifficulty()' >
-	      <md-radio-button ng-repeat="level in difficultyLevels" ng-value="level"  aria-label="level.title">
-					<span ng-bind="level.title"></span>
-				</md-radio-button>
-	    </md-radio-group>
+		<div class="app-page-container" ng-class="{loaded:true}" ng-controller="AppController" layout="row" layout-align="start center" >
+			<div class="app-page" layout="column" layout-align="center center" >
+				<div id="setup-menu" ng-controller="SetupMenuController" >
+					<md-card class="md-whiteframe-6dp">
+						<md-card-header style="font-size: 4.5vmin;" class="page-header" layout="row" layout-align="center center" layout-wrap>
+							<div class="card-container" ng-repeat="card in cards">
+								<div class="card {{card.isFlipped ? 'card-flipped' : ''}}">
+									<md-card class="md-whiteframe-3dp card-back">
+										<div class="card-back-image"></div>
+									</md-card>
+									<md-card class="md-whiteframe-6dp card-front" layout="row" layout-align="center center" layout-wrap>
+										<span ng-bind="card.text"></span>
+									</md-card>
+								</div>
+							</div>
+						</md-card-header>
+			      <md-card-content>
+							<p style="margin: 16px 0 0 0;">
+								Hi! Welcome to the most depressing <a href="https://en.wikipedia.org/wiki/Concentration_(game)">memory game</a> on the internet.
+		          </p>
+							<p style="margin: 16px 0 0 0;">
+								Please enter your name and configure your game type.
+							</p>
+							<form name="gameConfigForm" layout="column" layout-align="center stretch">
+								<md-input-container class="md-block">
+									<label>Name</label>
+									<input name="nameInput" ng-model="name" required md-maxlength="24">
+									<div ng-messages="gameConfigForm.nameInput.$error" ng-show="gameConfigForm.nameInput.$dirty && gameConfigForm.nameInput.$invalid">
+										<div ng-message="required">Name is required; it doesn't even have to be your real one.</div>
+										<div ng-message="md-maxlength">Name is too long. 24 chars max!</div>
+									</div>
+								</md-input-container>
+								<md-input-container style="margin: 0 0 16px 0;" class="md-block">
+									<md-radio-group ng-model="difficulty" layout="row" layout-align="start center" >
+										<md-radio-button ng-repeat="level in difficultyLevels" ng-value="level"  aria-label="level.title">
+											<span ng-bind="level.title"></span>
+										</md-radio-button>
+									</md-radio-group>
+								</md-input-container>
+								<md-input-container class="md-block">
+									<md-radio-group ng-model="depressingness" layout="row" layout-align="start center" >
+										<md-radio-button ng-repeat="level in depressingnessLevels" ng-value="level"  aria-label="level.title">
+											<span ng-bind="level.title"></span>
+										</md-radio-button>
+									</md-radio-group>
+								</md-input-container>
+								<section layout="row" layout-align="end center">
+									<md-button class="md-primary md-raised" ng-disabled="gameConfigForm.$invalid" ng-click="gameConfigForm.$invalid ? '' : startGame('solo')">Play Solo</md-button>
+									<md-button class="md-accent md-raised" ng-disabled="gameConfigForm.$invalid" ng-click="gameConfigForm.$invalid ? '' : startGame('paired')">Play Paired</md-button>
+						    </section>
+							</form>
+			      </md-card-content>
+			    </md-card>
+				</div>
+			</div>
+			<div class="app-page" layout="row" layout-align="center center" >
+				<md-card flex-gt-sm="66" flex="100" >
+					<md-card-header class="page-header" layout="row" layout-align="center center" layout-wrap>
+						depressingmemory.com
+					</md-card-header>
+	        <md-card-content>
+						<div id="card-area" style="font-size: {{ (4 / (cards.length / 8)) + 1 }}vmin;" ng-controller="CardsAreaController" layout="row" layout-align="center center" layout-wrap >
+							<div class="card-container" ng-repeat="card in cards" >
+								<div class="card {{card.isFlipped ? 'card-flipped' : ''}}" ng-click="flipCard(card)">
+									<md-card class="md-whiteframe-3dp card-back">
+										<div class="card-back-image"></div>
+									</md-card>
+									<md-card class="md-whiteframe-6dp card-front" layout="row" layout-align="center center" layout-wrap>
+										<a href="{{card.url}}">
+											<span style="font-size:{{card.fontSize}};" ng-bind="card.title"></span>
+										</a>
+									</md-card>
+								</div>
+							</div>
+						</div>
+	        </md-card-content>
+					<md-card-actions layout="row" layout-align="start center">
+						<md-button>Action 1</md-button>
+						<md-button>Action 2</md-button>
+						<md-card-icon-actions>
+							<md-button class="md-icon-button" aria-label="toggle">
+								<md-icon md-svg-icon="md-toggle-arrow"></md-icon>
+							</md-button>
+						</md-card-icon-actions>
+					</md-card-actions>
+	      </md-card>
+			</div>
 		</div>
 
 		<!--Angular stuff-->

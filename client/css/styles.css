@@ -1,8 +1,51 @@
 
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
 html, body{
   height: 100%;
   width: 100%;
-  background-color: #DDD;
+  overflow: hidden;
+  background-color: #666;
+}
+
+body{
+    position: relative;
+}
+
+.app-page-container {
+    opacity: 0;
+    -moz-transition: opacity 0.5s ease;
+    -o-transition: opacity 0.5s ease;
+    -webkit-transition: opacity 0.5s ease;
+    transition: opacity 0.5s ease;
+}
+
+.app-page-container.loaded {
+    opacity: 1;
+}
+
+.app-page-container, .app-page{
+  min-height: 100%;
+  min-width: 100%;
+}
+
+.page-header{
+  background-color: rgb(104,92,130);
+}
+
+/* Setup Menu */
+
+#setup-menu{
+
+}
+
+#setup-menu .card-container{
+    font-weight: bold;
+    margin: 0.25em;
+    width:5em;
+    height:7em;
 }
 
 /* Header */
@@ -73,3 +116,31 @@ html, body{
   color: #111;
   -webkit-transform: rotateY(-180deg);
 }
+
+/* Animations */
+
+.slide-animate.ng-enter, .slide-animate.ng-leave{
+  -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2s;
+  -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2s;
+  -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2s;
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2s;
+ }
+
+
+.slide-animate.ng-enter.ng-enter-active {
+ position: absolute;
+ left: 1300px;
+}
+
+.slide-animate.ng-enter {
+ left: 0;
+}
+
+.slide-animate.ng-leave.ng-leave-active {
+ position: absolute;
+ left: -1700px;
+ }
+
+.slide-animate.ng-leave {
+ right: 0;
+ }
