@@ -15,13 +15,13 @@
     app.get('/', function(req, res) {
       res.render('index.html');
     });
-
+    
     var cards = [
       {
         "title":"Vietnam War"
       },
       {
-        "title":"The Holocoust"
+        "title":"The Holocaust"
       },
       {
         "title":"9/11"
@@ -42,13 +42,13 @@
         "title":"Death of Princess Diana"
       },
       {
-        "title":"San Bernadino Shooting"
+        "title":"San Bernardino Attacks"
       },
       {
-        "title":"Newton Masaccre"
+        "title":"Sandy Hook Massacre"
       },
       {
-        "title":"Assasination of Lincoln"
+        "title":"Assassination of Lincoln"
       },
       {
         "title":"Civil War"
@@ -61,6 +61,15 @@
       },
       {
         "title":"Spilling Your Beer"
+      },
+      {
+        "title":"Something Terrible"
+      },
+      {
+        "title":"Something Awful"
+      },
+      {
+        "title":"Molasses Disaster"
       }
     ];
 

@@ -23,17 +23,17 @@ var app = angular.module('DepressingMemory', ['ngMaterial'])
       var difficultyLevels = [
         {
           "title" : "Easy",
-          "pairs" : 5,
+          "pairs" : 6,
           "timeLimit" : 60000
         },
         {
           "title" : "Normal",
-          "pairs" : 10,
+          "pairs" : 12,
           "timeLimit" : 120000
         },
         {
           "title" : "Hard",
-          "pairs" : 15,
+          "pairs" : 18,
           "timeLimit" : 240000
         }
       ];
@@ -63,6 +63,7 @@ var app = angular.module('DepressingMemory', ['ngMaterial'])
   });
 
 /* Controllers */
+
 app.controller("CardsAreaController", function($scope, $window, $http, $timeout, appState) {
 
   $scope.isReady = false;
@@ -128,6 +129,39 @@ app.controller("CardsAreaController", function($scope, $window, $http, $timeout,
           var card = data[i];
           card.isFlipped = false;
           card.words = card.title.split(' ');
+          var longestWord = 0;
+          angular.forEach(card.words,function(word){
+            if(word.length > longestWord){
+              longestWord = word.length;
+            }
+          })
+          if(longestWord > 16){
+            card.fontSize = "0.6em";
+          }
+          else if(longestWord === 16){
+            card.fontSize = "0.65em";
+          }
+          else if(longestWord === 15){
+            card.fontSize = "0.7em";
+          }
+          else if(longestWord === 14){
+            card.fontSize = "0.75em";
+          }
+          else if(longestWord === 13){
+            card.fontSize = "0.8em";
+          }
+          else if(longestWord === 12){
+            card.fontSize = "0.85em";
+          }
+          else if(longestWord === 11){
+            card.fontSize = "0.9em";
+          }
+          else if(longestWord === 10){
+            card.fontSize = "0.95em";
+          }
+          else{
+            card.fontSize = "1em";
+          }
           cards.push(card);
           var cardCopy = {};
           angular.extend(cardCopy, card);
@@ -143,8 +177,6 @@ app.controller("CardsAreaController", function($scope, $window, $http, $timeout,
         console.log(err);
       });
     };
-
-    getCards(appState.getDifficulty().pairs);
 
     appState.observe(function(message){
       if(message === "difficulty"){

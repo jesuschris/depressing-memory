@@ -18,14 +18,19 @@ html, body{
   padding: 1em;
 }
 
-.card{
-  font-family: 'News Cycle', sans-serif;
-  word-wrap: normal;
-  text-align: center; 
-  line-height: 1.2em;
+.card-container{
   margin: 0.25em;
   width:5em;
   height:7em;
+}
+
+.card{
+  font-family: 'News Cycle', sans-serif;
+  word-wrap: normal;
+  text-align: center;
+  line-height: 1.2em;
+  width: 100%;
+  height: 100%;
   border-radius: 0.25em;
   -webkit-transform-style: preserve-3d;
   -webkit-transition: 0.25s;
@@ -33,7 +38,7 @@ html, body{
 
 .card > md-card{
   margin: 0;
-  border-radius: 0.25em;
+  border-radius: 0.35em;
 }
 
 .card-flipped{
@@ -48,7 +53,7 @@ html, body{
 }
 
 .card-back{
-  border: 0.25em solid #FFF;
+  border: 0.35em solid #FFF;
   position: absolute;
   z-index: 1;
 }
