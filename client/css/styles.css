@@ -7,11 +7,7 @@ html, body{
   height: 100%;
   width: 100%;
   overflow: hidden;
-  background-color: #666;
-}
-
-body{
-    position: relative;
+  background-color: #AAA;
 }
 
 .app-page-container {
@@ -138,7 +134,6 @@ body{
   -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2s;
   transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2s;
  }
-
 
 .slide-animate.ng-enter.ng-enter-active {
  position: absolute;

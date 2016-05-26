@@ -112,6 +112,18 @@ var app = angular.module('DepressingMemory', ['ngMaterial','ngMessages'])
       //Observer pattern
       var _observers = [];
 
+      var updateObservers = function(message){
+        angular.forEach(_observers, function (callBack) {
+            callBack(message);
+        });
+      }
+
+      // State vars
+
+      var currentPage = "setup-page";
+
+      //Values
+
       var difficultyLevels = [
         {
           "title" : "Easy",
@@ -143,15 +155,16 @@ var app = angular.module('DepressingMemory', ['ngMaterial','ngMessages'])
       ];
       var depressingness = depressingnessLevels[0];
 
-      var updateObservers = function(message){
-        angular.forEach(_observers, function (callBack) {
-            callBack(message);
-        });
-      }
-
       return {
         observe: function (callBack) {
           _observers.push(callBack);
+        },
+        getCurrentPage: function() {
+            return currentPage;
+        },
+        setCurrentPage: function (value) {
+          currentPage = value;
+          updateObservers("currentPage");
         },
         getDifficulty: function() {
             return difficulty;
@@ -180,7 +193,13 @@ var app = angular.module('DepressingMemory', ['ngMaterial','ngMessages'])
 
 app.controller("AppController", function($scope, appState){
 
-  $scope.pages = "";
+  $scope.currentPage = appState.getCurrentPage();
+
+  appState.observe(function(message){
+    if(message === "currentPage"){
+      $scope.currentPage = appState.getCurrentPage();
+    }
+  });
 
 });
 
@@ -231,7 +250,8 @@ app.controller("SetupMenuController", function($scope, $interval, $timeout, appS
 
   $scope.startGame = function(type){
     if(type === "solo" || type === "paired"){
-
+      appState.setDifficulty($scope.difficulty);
+      appState.setCurrentPage("game-page");
     }
   }
 
@@ -350,12 +370,13 @@ app.controller("CardsAreaController", function($scope, $window, $http, $timeout,
         console.log(err);
       });
     };
-    getCards(appState.getDifficulty().pairs);
+
     appState.observe(function(message){
-      if(message === "difficulty"){
-        //getCards(appState.getDifficulty().pairs);
+      if(message === "currentPage" && appState.getCurrentPage() === "game-page"){
+        getCards(appState.getDifficulty().pairs);
       }
     });
+
 
 });
 /* Directives */

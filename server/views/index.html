@@ -4,28 +4,29 @@
 	  <meta name="viewport" content="width=device-width, initial-scale=1">
 		<style>
 			.app-loader {
-			  position: absolute;
-			  top: 50%;
-			  left: 50%;
-			  -webkit-transform: translate(-50%, -50%);
-			  -ms-transform: translate(-50%, -50%);
-			  transform: translate(-50%, -50%);
-			  color: #FFF;
-			  text-align: center;
-			  -webkit-perspective: 20em;
-			  -ms-perspective: 20em;
-			  perspective: 20em;
-			  -webkit-transform-style: preserve-3d;
-			  -ms-transform-style: preserve-3d;
-			   transform-style: preserve-3d;
-				 opacity: 1;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				-webkit-transform: translate(-50%, -50%);
+				-ms-transform: translate(-50%, -50%);
+				transform: translate(-50%, -50%);
+				color: #FFF;
+				text-align: center;
+				-webkit-perspective: 20em;
+				-ms-perspective: 20em;
+				perspective: 20em;
+				opacity: 1;
+				visibility: visible;;
 				-webkit-transition: 0.5s ease-out;
 				-ms-transition: 0.5s ease-out;
 				transition: 0.5s ease-out;
+				-webkit-transform-style: preserve-3d;
+				-ms-transform-style: preserve-3d;
+				transform-style: preserve-3d;
 			}
 			.app-loader.hideloader {
+				visibility: collapse;
 				opacity: 0;
-        top:-50%;
 			}
 			.app-loader-card {
 			  width: 5em;
@@ -72,15 +73,13 @@
 		<link href='https://fonts.googleapis.com/css?family=News+Cycle' rel='stylesheet' type='text/css'>
 	</head>
 	<body ng-app="DepressingMemory">
-
 		<!-- Loader -->
 		<div class="app-loader" ng-class="{hideloader:true}">
 			<div class="app-loader-card">
 			</div>
 		</div>
-
 		<div class="app-page-container" ng-class="{loaded:true}" ng-controller="AppController" layout="row" layout-align="start center" >
-			<div class="app-page" layout="column" layout-align="center center" >
+			<div id="setup-page" class="app-page {{currentPage==='setup-page' ? '' : 'hide'}}" layout="column" layout-align="center center" >
 				<div id="setup-menu" ng-controller="SetupMenuController" >
 					<md-card class="md-whiteframe-6dp">
 						<md-card-header style="font-size: 4.5vmin;" class="page-header" layout="row" layout-align="center center" layout-wrap>
@@ -89,7 +88,7 @@
 									<md-card class="md-whiteframe-3dp card-back">
 										<div class="card-back-image"></div>
 									</md-card>
-									<md-card class="md-whiteframe-6dp card-front" layout="row" layout-align="center center" layout-wrap>
+									<md-card class="md-whiteframe-3dp card-front" layout="row" layout-align="center center" layout-wrap>
 										<span ng-bind="card.text"></span>
 									</md-card>
 								</div>
@@ -134,37 +133,40 @@
 			    </md-card>
 				</div>
 			</div>
-			<div class="app-page" layout="row" layout-align="center center" >
-				<md-card flex-gt-sm="66" flex="100" >
-					<md-card-header class="page-header" layout="row" layout-align="center center" layout-wrap>
-						depressingmemory.com
-					</md-card-header>
-	        <md-card-content>
-						<div id="card-area" style="font-size: {{ (4 / (cards.length / 8)) + 1 }}vmin;" ng-controller="CardsAreaController" layout="row" layout-align="center center" layout-wrap >
-							<div class="card-container" ng-repeat="card in cards" >
-								<div class="card {{card.isFlipped ? 'card-flipped' : ''}}" ng-click="flipCard(card)">
-									<md-card class="md-whiteframe-3dp card-back">
-										<div class="card-back-image"></div>
-									</md-card>
-									<md-card class="md-whiteframe-6dp card-front" layout="row" layout-align="center center" layout-wrap>
-										<a href="{{card.url}}">
-											<span style="font-size:{{card.fontSize}};" ng-bind="card.title"></span>
-										</a>
-									</md-card>
-								</div>
-							</div>
+			<div id="game-page" class="app-page {{currentPage==='game-page' ? '' : 'hide'}}" layout="row" layout-align="center center" >
+				<div id="card-area" flex-gt-sm="66" flex="100" style="font-size: {{ (5 / (cards.length / 8)) + 1 }}vmin;" ng-controller="CardsAreaController" layout="row" layout-align="center center" layout-wrap >
+					<div class="card-container" ng-repeat="card in cards" >
+						<div class="card {{card.isFlipped ? 'card-flipped' : ''}}" ng-click="flipCard(card)">
+							<md-card class="md-whiteframe-3dp card-back">
+								<div class="card-back-image"></div>
+							</md-card>
+							<md-card class="md-whiteframe-3dp card-front" layout="row" layout-align="center center" layout-wrap>
+								<a href="{{card.url}}">
+									<span style="font-size:{{card.fontSize}};" ng-bind="card.title"></span>
+								</a>
+							</md-card>
 						</div>
-	        </md-card-content>
-					<md-card-actions layout="row" layout-align="start center">
-						<md-button>Action 1</md-button>
-						<md-button>Action 2</md-button>
-						<md-card-icon-actions>
-							<md-button class="md-icon-button" aria-label="toggle">
-								<md-icon md-svg-icon="md-toggle-arrow"></md-icon>
-							</md-button>
-						</md-card-icon-actions>
-					</md-card-actions>
-	      </md-card>
+					</div>
+				</div>
+				<!--
+					<md-card  >
+						<md-card-header class="page-header" layout="row" layout-align="center center" layout-wrap>
+							depressingmemory.com
+						</md-card-header>
+		        <md-card-content>
+
+		        </md-card-content>
+						<md-card-actions layout="row" layout-align="start center">
+							<md-button>Action 1</md-button>
+							<md-button>Action 2</md-button>
+							<md-card-icon-actions>
+								<md-button class="md-icon-button" aria-label="toggle">
+									<md-icon md-svg-icon="md-toggle-arrow"></md-icon>
+								</md-button>
+							</md-card-icon-actions>
+						</md-card-actions>
+		      </md-card>
+				-->
 			</div>
 		</div>
 
