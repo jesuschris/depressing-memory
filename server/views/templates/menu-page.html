@@ -1,12 +1,12 @@
-<div ng-controller="SetupMenuController" layout="column" layout-align="center center" >
+<div ng-controller="SetupMenuController" layout="column" layout-align="center center">
   <md-card class="page-panel md-whiteframe-6dp">
     <md-card-header style="font-size: 4vmin;" class="page-panel-header" layout="row" layout-align="center center" layout-wrap>
       <div class="card-container" ng-repeat="card in cards">
         <div class="card {{card.isFlipped ? 'card-flipped' : ''}}">
-          <md-card class="md-whiteframe-3dp card-back">
+          <md-card class="md-whiteframe-6dp card-back">
             <div class="card-back-image"></div>
           </md-card>
-          <md-card class="md-whiteframe-3dp card-front" layout="row" layout-align="center center" layout-wrap>
+          <md-card class="md-whiteframe-6dp card-front" layout="row" layout-align="center center" layout-wrap>
             <span ng-bind="card.text"></span>
           </md-card>
         </div>
@@ -37,7 +37,7 @@
         </md-input-container>
         <section layout="row" layout-align="end center">
           <md-button class="md-primary md-raised" ng-disabled="gameConfigForm.$invalid" ng-click="gameConfigForm.$invalid ? '' : startGame('solo')">Play Solo</md-button>
-          <md-button class="md-accent md-raised" ng-disabled="gameConfigForm.$invalid" ng-click="gameConfigForm.$invalid ? '' : startGame('paired')">Play Paired</md-button>
+          <md-button class="md-accent md-raised" ng-disabled="true" ng-click="gameConfigForm.$invalid ? '' : startGame('paired')">Play Paired</md-button>
         </section>
       </form>
     </md-card-content>
