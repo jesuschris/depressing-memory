@@ -1,0 +1,28 @@
+<div ng-controller="CardsAreaController" layout="column" layout-align="center center" >
+  <md-card class="page-panel md-whiteframe-6dp">
+    <md-card-header class="page-panel-header">
+      <div id="card-area" flex="100" flex-gt-sm="66" ng-style="{ 'font-size' : fontSize }" layout="row" layout-align="center center" layout-wrap >
+        <div class="card-container" ng-repeat="card in cards" >
+          <div class="card {{card.isFlipped ? 'card-flipped' : ''}}" ng-click="flipCard(card)">
+            <md-card class="md-whiteframe-3dp card-back">
+              <div class="card-back-image"></div>
+            </md-card>
+            <md-card class="md-whiteframe-3dp card-front" layout="row" layout-align="center center" layout-wrap>
+              <span style="font-size:{{card.fontSize}};" ng-bind="card.title"></span>
+            </md-card>
+          </div>
+        </div>
+      </div>
+    </md-card-header>
+    <md-card-content>
+      <p>
+        The titles of Washed Out's breakthrough song and the first single from Paracosm share the
+        two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
+      </p>
+    </md-card-content>
+    <md-card-actions layout="row" layout-align="start center">
+      <md-button>Action 1</md-button>
+      <md-button>Action 2</md-button>
+    </md-card-actions>
+  </md-card>
+</div>

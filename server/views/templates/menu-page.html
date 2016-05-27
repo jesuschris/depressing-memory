@@ -1,0 +1,45 @@
+<div ng-controller="SetupMenuController" layout="column" layout-align="center center" >
+  <md-card class="page-panel md-whiteframe-6dp">
+    <md-card-header style="font-size: 4vmin;" class="page-panel-header" layout="row" layout-align="center center" layout-wrap>
+      <div class="card-container" ng-repeat="card in cards">
+        <div class="card {{card.isFlipped ? 'card-flipped' : ''}}">
+          <md-card class="md-whiteframe-3dp card-back">
+            <div class="card-back-image"></div>
+          </md-card>
+          <md-card class="md-whiteframe-3dp card-front" layout="row" layout-align="center center" layout-wrap>
+            <span ng-bind="card.text"></span>
+          </md-card>
+        </div>
+      </div>
+    </md-card-header>
+    <md-card-content>
+      <p style="margin: 16px 0 0 0;">
+        Hi! Welcome to the most depressing <a href="https://en.wikipedia.org/wiki/Concentration_(game)">memory game</a> on the internet.
+      </p>
+      <p style="margin: 16px 0 0 0;">
+        Please enter your name and select your game type.
+      </p>
+      <form name="gameConfigForm" layout="column" layout-align="center stretch" autocomplete="noway">
+        <md-input-container class="md-block">
+          <label>Name</label>
+          <input name="nameInput" ng-model="name" required md-maxlength="24">
+          <div ng-messages="gameConfigForm.nameInput.$error" ng-show="gameConfigForm.nameInput.$dirty && gameConfigForm.nameInput.$invalid">
+            <div ng-message="required">Name is required; it doesn't even have to be your real one.</div>
+            <div ng-message="md-maxlength">Name is too long; 24 chars max!</div>
+          </div>
+        </md-input-container>
+        <md-input-container style="margin: 0 0 16px 0;" class="md-block">
+          <md-radio-group ng-model="difficulty" layout="row" layout-align="start center" >
+            <md-radio-button ng-repeat="level in difficultyLevels" ng-value="level"  aria-label="level.title">
+              <span ng-bind="level.title"></span>
+            </md-radio-button>
+          </md-radio-group>
+        </md-input-container>
+        <section layout="row" layout-align="end center">
+          <md-button class="md-primary md-raised" ng-disabled="gameConfigForm.$invalid" ng-click="gameConfigForm.$invalid ? '' : startGame('solo')">Play Solo</md-button>
+          <md-button class="md-accent md-raised" ng-disabled="gameConfigForm.$invalid" ng-click="gameConfigForm.$invalid ? '' : startGame('paired')">Play Paired</md-button>
+        </section>
+      </form>
+    </md-card-content>
+  </md-card>
+</div>

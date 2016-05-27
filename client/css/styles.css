@@ -1,8 +1,4 @@
 
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-  display: none !important;
-}
-
 html, body{
   height: 100%;
   width: 100%;
@@ -11,11 +7,12 @@ html, body{
 }
 
 .app-page-container {
-    opacity: 0;
-    -moz-transition: opacity 0.5s ease;
-    -o-transition: opacity 0.5s ease;
-    -webkit-transition: opacity 0.5s ease;
-    transition: opacity 0.5s ease;
+  position: relative;
+  opacity: 0;
+  -moz-transition: opacity 0.5s ease;
+  -o-transition: opacity 0.5s ease;
+  -webkit-transition: opacity 0.5s ease;
+  transition: opacity 0.5s ease;
 }
 
 .app-page-container.loaded {
@@ -23,11 +20,16 @@ html, body{
 }
 
 .app-page-container, .app-page{
-  min-height: 100%;
-  min-width: 100%;
+  height: 100%;
+  width: 100%;
 }
 
-.page-header{
+.page-panel{
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.page-panel-header{
   background-color: rgb(104,92,130);
 }
 
@@ -54,15 +56,18 @@ html, body{
 
 #card-area{
   padding: 1em;
+  max-width: 100%;
+  max-height: 100%;
+  overflow: hidden;
 }
 
 .card-container{
   margin: 0.25em;
   width:5em;
   height:7em;
-  -webkit-perspective: 20em;
-  -ms-perspective: 20em;
-  perspective: 20em;
+  -webkit-perspective: 15em;
+  -ms-perspective: 15em;
+  perspective: 15em;
 }
 
 .card{
@@ -127,27 +132,58 @@ html, body{
 
 /* Animations */
 
-.slide-animate.ng-enter, .slide-animate.ng-leave{
-  -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2s;
-  -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2s;
-  -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2s;
-  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 2s;
- }
+.app-page-slide {
+  -webkit-transition: -webkit-transform .7s ease;
+  -ms-transition: -moz-transform .7s ease;
+  transition: transform .7s ease;
 
-.slide-animate.ng-enter.ng-enter-active {
- position: absolute;
- left: 1300px;
+  -webkit-transform: translateX(0);
+  -ms-transform: translateX(0);
+  transform: translateX(0);
 }
 
-.slide-animate.ng-enter {
- left: 0;
+.app-page-slide.ng-enter {
+    -webkit-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    transform: translateX(100%);
 }
 
-.slide-animate.ng-leave.ng-leave-active {
- position: absolute;
- left: -1700px;
- }
+.app-page-slide.ng-enter.ng-enter-active, .slide.ng-leave {
+    position: absolute;
+    -webkit-transform: translateX(0);
+    -ms-transform: translateX(0);
+    transform: translateX(0);
+}
 
-.slide-animate.ng-leave {
- right: 0;
- }
+.app-page-slide.ng-leave.ng-leave-active {
+    -webkit-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    transform: translateX(-100%);
+}
+
+/*
+.app-page-slide {
+  -webkit-transition: opacity .5s ease-out;
+  -ms-transition: opacity .5s ease-out;
+  transition: opacity .5s ease-out;
+
+  visibility: visible;;
+  opacity: 1;
+}
+
+.app-page-slide.ng-enter {
+    opacity: 0;
+    visibility: collapse;
+}
+
+.app-page-slide.ng-enter.ng-enter-active, .slide.ng-leave {
+    position: absolute;
+    opacity: 1;
+    visibility: visible;;
+}
+
+.app-page-slide.ng-leave.ng-leave-active {
+    opacity: 0;
+    visibility: collapse;
+}
+*/
