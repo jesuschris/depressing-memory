@@ -1,6 +1,4 @@
 app.controller('AppController', function($scope, appState, socket){
-
-
 });
 
 app.controller('PageController', function($scope, $window){
@@ -56,11 +54,12 @@ app.controller('SetupMenuController', function($scope, $state, $interval, $timeo
   $scope.difficultyLevels = appState.getDifficultyLevels();
   $scope.difficulty = appState.getDifficulty();
 
-  $scope.name = '';
+  $scope.name = appState.getUserName();
 
   $scope.startGame = function(type){
     if(type === 'solo' || type === 'paired'){
       appState.setDifficulty($scope.difficulty);
+      appState.setUserName($scope.name);
       appState.setIsUserSetup(true);
       $state.go('game');
     }
@@ -114,6 +113,10 @@ app.controller('CardsAreaController', function($scope, $state, $window, $http, $
   $scope.pendingCard = null;
 
   $scope.flipCard = function(card){
+    if($scope.isReady && !$scope.isPlaying){
+      //Start our game
+      $scope.buttonAction('Start');
+    }
     if($scope.isReady && $scope.isPlaying && $scope.canFlip){
       if(!card.isFlipped){
         $scope.flipCount++;
@@ -162,7 +165,7 @@ app.controller('CardsAreaController', function($scope, $state, $window, $http, $
   $scope.LessThan10SecondsLeft = false;
 
   $scope.buttonAction = function(buttonText){
-    if(buttonText === 'Start'){
+    if(buttonText === 'Start' && $scope.isReady){
       $scope.buttonText = 'Quit';
       $scope.buttonClass = 'md-warn';
       $scope.isPlaying = true;
@@ -202,6 +205,7 @@ app.controller('CardsAreaController', function($scope, $state, $window, $http, $
     $scope.buttonClass = 'md-accent';
     $timeout.cancel(timer);
     $scope.isPlaying = false;
+    $scope.isReady = false;
   }
 
   function GameOverModalController($scope, $timeout, $mdDialog, message) {

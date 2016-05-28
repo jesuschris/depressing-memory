@@ -67,12 +67,8 @@ var app = angular.module('DepressingMemory',
         });
       }
 
-      // State vars
-
       var isUserSetup = false;
-
-      //Values
-
+      var userName = "";
       var difficultyLevels = [
         {
           "title" : "Easy",
@@ -102,6 +98,13 @@ var app = angular.module('DepressingMemory',
         setIsUserSetup: function (value) {
           isUserSetup = value;
           updateObservers("isUserSetup");
+        },
+        getUserName: function() {
+            return userName;
+        },
+        setUserName: function (value) {
+          userName = value;
+          updateObservers("userName");
         },
         getDifficulty: function() {
             return difficulty;

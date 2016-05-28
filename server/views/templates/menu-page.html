@@ -14,7 +14,7 @@
     </md-card-header>
     <md-card-content>
       <p style="margin: 16px 0 0 0;">
-        Hi! Welcome to the most depressing <a href="https://en.wikipedia.org/wiki/Concentration_(game)">memory game</a> on the internet.
+        Hi! Welcome to the most depressing <a href="https://en.wikipedia.org/wiki/Concentration_(game)" target="_blank">memory game</a> on the internet.
       </p>
       <p style="margin: 16px 0 0 0;">
         Please enter your name and select your game type.
@@ -36,7 +36,7 @@
           </md-radio-group>
         </md-input-container>
         <section layout="row" layout-align="end center">
-          <md-button class="md-primary md-raised" ng-click="gameConfigForm.$invalid ? '' : startGame('solo')">Play Solo</md-button>
+          <md-button class="md-primary md-raised"  ng-disabled="gameConfigForm.$invalid" ng-click="gameConfigForm.$invalid ? '' : startGame('solo')">Play Solo</md-button>
           <md-button class="md-accent md-raised" ng-disabled="true" ng-click="gameConfigForm.$invalid ? '' : startGame('paired')">Play Paired</md-button>
         </section>
       </form>

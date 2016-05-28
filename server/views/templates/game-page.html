@@ -9,7 +9,7 @@
               <div class="card-back-image"></div>
             </md-card>
             <md-card class="md-whiteframe-6dp card-front" layout="row" layout-align="center center" layout-wrap>
-              <a href="{{card.url}}">
+              <a href="{{card.url}}" target="_blank">
                 <span style="font-size:{{card.fontSize}};" ng-bind="card.title"></span>
               </a>
             </md-card>
@@ -23,7 +23,7 @@
         <span>Flips: {{flipCount}}</span>
       </div>
       <div layout="row" layout-align="center center">
-        <md-button class="md-raised" ng-class="buttonClass" ng-click="buttonAction(buttonText)" ng-disabled="!isReady">{{buttonText}}</md-button>
+        <md-button class="md-raised" ng-class="buttonClass" ng-click="buttonAction(buttonText)" >{{buttonText}}</md-button>
         <span style="margin-left:16px;" class="game-timer" ng-class="LessThan10SecondsLeft ? 'pulsateColor' : ''">
           {{timeLeft | date: 'mm:ss'}}
         </span>
