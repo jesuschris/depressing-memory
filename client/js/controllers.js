@@ -1,13 +1,13 @@
-app.controller("AppController", function($scope, appState, socket){
+app.controller('AppController', function($scope, appState, socket){
 
 
 });
 
-app.controller("PageController", function($scope, $window){
+app.controller('PageController', function($scope, $window){
   var setWH = function(){
-    $scope.width = $window.innerWidth  + "px";
-    $scope.height = ($window.innerHeight - 16) + "px";
-    //console.log($scope.width + " x " + $scope.height);
+    $scope.width = $window.innerWidth  + 'px';
+    $scope.height = ($window.innerHeight - 16) + 'px';
+    //console.log($scope.width + ' x ' + $scope.height);
   };
   angular.element($window).bind('resize', function(){
     setWH();
@@ -16,12 +16,12 @@ app.controller("PageController", function($scope, $window){
   setWH();
 });
 
-app.controller("SetupMenuController", function($scope, $state, $interval, $timeout, appState) {
+app.controller('SetupMenuController', function($scope, $state, $interval, $timeout, appState) {
 
   $scope.cards = [
-    {"text":"depressing","isFlipped":false},
-    {"text":"memory","isFlipped":false},
-    {"text":".com","isFlipped":false},
+    {'text':'depressing','isFlipped':false},
+    {'text':'memory','isFlipped':false},
+    {'text':'.com','isFlipped':false},
   ];
 
   var currentTitleCard = 0;
@@ -56,38 +56,38 @@ app.controller("SetupMenuController", function($scope, $state, $interval, $timeo
   $scope.difficultyLevels = appState.getDifficultyLevels();
   $scope.difficulty = appState.getDifficulty();
 
-  $scope.name = "Chris";
+  $scope.name = '';
 
   $scope.startGame = function(type){
-    if(type === "solo" || type === "paired"){
+    if(type === 'solo' || type === 'paired'){
       appState.setDifficulty($scope.difficulty);
       appState.setIsUserSetup(true);
-      $state.go("game");
+      $state.go('game');
     }
   }
 });
 
-app.controller("CardsAreaController", function($scope, $state, $window, $http, $timeout, appState) {
+app.controller('CardsAreaController', function($scope, $state, $window, $http, $timeout, $mdDialog, appState) {
 
   var setFontSize = function(){
     if($window.innerWidth >= $window.innerHeight){
       if($window.innerWidth >= 765){
         //Bigger landscape... make font a little bigger!
-        $scope.fontSize = (1.3 * ($window.innerWidth / 100)) + "px";
+        $scope.fontSize = (1.3 * ($window.innerWidth / 100)) + 'px';
       }
       else{
         //Small landscape... make font small!
-        $scope.fontSize = (2 * ($window.innerWidth / 100)) + "px";
+        $scope.fontSize = (2 * ($window.innerWidth / 100)) + 'px';
       }
     }
     else{
       if($window.innerWidth >= 599){
         //Bigger portrait... make font a little bigger!
-        $scope.fontSize = (1.5 * ($window.innerWidth / 100)) + "px";
+        $scope.fontSize = (1.5 * ($window.innerWidth / 100)) + 'px';
       }
       else{
         //Small portrait... make font small!
-        $scope.fontSize = (2.5 * ($window.innerWidth / 100)) + "px";
+        $scope.fontSize = (2.5 * ($window.innerWidth / 100)) + 'px';
       }
     }
   };
@@ -126,6 +126,14 @@ app.controller("CardsAreaController", function($scope, $state, $window, $http, $
             if($scope.matchedPairs === appState.getDifficulty().pairs){
               //We're done!!
               $scope.stopTimer();
+              $mdDialog.show({
+                 parent: angular.element(document.body),
+                 templateUrl: './templates/gameover-modal.html',
+                 locals: {
+                   message : 'You won! 😁'
+                  },
+                 controller : GameOverModalController
+              });
             }
           }
           else{
@@ -147,16 +155,16 @@ app.controller("CardsAreaController", function($scope, $state, $window, $http, $
     }
   }
 
-  $scope.buttonText = "Start";
-  $scope.buttonClass = "md-primary";
+  $scope.buttonText = 'Start';
+  $scope.buttonClass = 'md-primary';
 
   var timer = null;
   $scope.LessThan10SecondsLeft = false;
 
   $scope.buttonAction = function(buttonText){
-    if(buttonText === "Start"){
-      $scope.buttonText = "Quit";
-      $scope.buttonClass = "md-warn";
+    if(buttonText === 'Start'){
+      $scope.buttonText = 'Quit';
+      $scope.buttonClass = 'md-warn';
       $scope.isPlaying = true;
       $scope.canFlip = true;
       ($scope.startTimer =function() {
@@ -166,13 +174,21 @@ app.controller("CardsAreaController", function($scope, $state, $window, $http, $
         if ($scope.timeLeft === 0) {
           $scope.stopTimer();
           $scope.canFlip = false;
+          $mdDialog.show({
+             parent: angular.element(document.body),
+             templateUrl: './templates/gameover-modal.html',
+             locals: {
+               message : 'You lost... 😐 '
+              },
+             controller : GameOverModalController
+          });
         }
       })();
     }
-    else if(buttonText === "Quit"){
+    else if(buttonText === 'Quit'){
       $scope.stopTimer();
     }
-    else if(buttonText === "Reset"){
+    else if(buttonText === 'Reset'){
       resetGame();
       setUpGame(appState.getDifficulty());
     }
@@ -182,10 +198,21 @@ app.controller("CardsAreaController", function($scope, $state, $window, $http, $
   }
 
   $scope.stopTimer = function() {
-    $scope.buttonText = "Reset";
-    $scope.buttonClass = "md-accent";
+    $scope.buttonText = 'Reset';
+    $scope.buttonClass = 'md-accent';
     $timeout.cancel(timer);
     $scope.isPlaying = false;
+  }
+
+  function GameOverModalController($scope, $timeout, $mdDialog, message) {
+    $scope.message = message;
+    $scope.flipCard = false;
+    $timeout(function(){
+      $scope.flipCard = true;
+    },1000);
+    $scope.closeDialog = function() {
+      $mdDialog.hide();
+    }
   }
 
   var resetGame = function(){
@@ -203,16 +230,16 @@ app.controller("CardsAreaController", function($scope, $state, $window, $http, $
     });
     flippedCards = [];
 
-    $scope.buttonText = "Start";
-    $scope.buttonClass = "md-primary";
+    $scope.buttonText = 'Start';
+    $scope.buttonClass = 'md-primary';
   }
 
   var setUpGame = function(difficulty){
     $scope.isReady = false;
     $scope.isLoading = true;
     $http({
-      url: "api/cards",
-      method: "GET",
+      url: 'api/cards',
+      method: 'GET',
       params: { num: difficulty.pairs }
     })
       .then(function(res){
@@ -229,31 +256,31 @@ app.controller("CardsAreaController", function($scope, $state, $window, $http, $
             }
           })
           if(longestWord > 16){
-            card.fontSize = "0.6em";
+            card.fontSize = '0.6em';
           }
           else if(longestWord === 16){
-            card.fontSize = "0.65em";
+            card.fontSize = '0.65em';
           }
           else if(longestWord === 15){
-            card.fontSize = "0.7em";
+            card.fontSize = '0.7em';
           }
           else if(longestWord === 14){
-            card.fontSize = "0.75em";
+            card.fontSize = '0.75em';
           }
           else if(longestWord === 13){
-            card.fontSize = "0.8em";
+            card.fontSize = '0.8em';
           }
           else if(longestWord === 12){
-            card.fontSize = "0.85em";
+            card.fontSize = '0.85em';
           }
           else if(longestWord === 11){
-            card.fontSize = "0.9em";
+            card.fontSize = '0.9em';
           }
           else if(longestWord === 10){
-            card.fontSize = "0.95em";
+            card.fontSize = '0.95em';
           }
           else{
-            card.fontSize = "1em";
+            card.fontSize = '1em';
           }
           cards.push(card);
           var cardCopy = {};
@@ -275,7 +302,7 @@ app.controller("CardsAreaController", function($scope, $state, $window, $http, $
     };
 
     $scope.goToMenu = function(){
-        $state.go("menu");
+        $state.go('menu');
     }
 
     appState.observe(function(message){

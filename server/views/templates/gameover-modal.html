@@ -1,0 +1,17 @@
+<md-dialog aria-label="Game over dialogue">
+ <md-dialog-content style="padding:36px 24px 12px 24px;"  layout="column" layout-align="center center">
+   <div style="font-size:45px;" class="card-container">
+     <div class="card {{flipCard ? 'card-flipped' : ''}}">
+       <md-card class="md-whiteframe-6dp card-back">
+         <div class="card-back-image"></div>
+       </md-card>
+       <md-card class="md-whiteframe-6dp card-front" layout="row" layout-align="center center" layout-wrap>
+         {{message}}
+       </md-card>
+     </div>
+   </div>
+ </md-dialog-content>
+ <md-dialog-actions>
+   <md-button ng-click="closeDialog()" class="md-primary">OK</md-button>
+ </md-dialog-actions>
+</md-dialog>

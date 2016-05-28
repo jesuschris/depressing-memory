@@ -36,7 +36,7 @@
           </md-radio-group>
         </md-input-container>
         <section layout="row" layout-align="end center">
-          <md-button class="md-primary md-raised" ng-disabled="gameConfigForm.$invalid" ng-click="gameConfigForm.$invalid ? '' : startGame('solo')">Play Solo</md-button>
+          <md-button class="md-primary md-raised" ng-click="gameConfigForm.$invalid ? '' : startGame('solo')">Play Solo</md-button>
           <md-button class="md-accent md-raised" ng-disabled="true" ng-click="gameConfigForm.$invalid ? '' : startGame('paired')">Play Paired</md-button>
         </section>
       </form>

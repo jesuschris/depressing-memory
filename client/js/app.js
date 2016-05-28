@@ -29,14 +29,10 @@ var app = angular.module('DepressingMemory',
     var customWarn = {'50': '#d0b5d3','100': '#c6a5ca','200': '#bc95c0','300': '#b185b7','400': '#a775ad','500': '9D65A4','600': '#905997','700': '#804f87','800': '#714676','900': '#623d66','A100': '#dac5dd','A200': '#e4d5e6','A400': '#efe5f0','A700': '#523356'};
     $mdThemingProvider.definePalette('customWarn',customWarn);
 
-    var customBackground = {'50': '#ffffff','100': '#ffffff','200': '#ffffff','300': '#ffffff','400': '#f9fbfb','500': 'E9F1F2','600': '#d9e7e9','700': '#c9dddf','800': '#b9d2d6','900': '#a9c8cc','A100': '#ffffff','A200': '#ffffff','A400': '#ffffff','A700': '#99bec3'};
-    $mdThemingProvider.definePalette('customBackground',customBackground);
-
     $mdThemingProvider.theme('default')
      .primaryPalette('customPrimary')
      .accentPalette('customAccent')
      .warnPalette('customWarn')
-     .backgroundPalette('customBackground')
 
     theme = $mdThemingProvider._THEMES;
   })

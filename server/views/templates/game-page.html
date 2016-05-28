@@ -22,14 +22,14 @@
         <span>Matches: {{matchedPairs}}</span>
         <span>Flips: {{flipCount}}</span>
       </div>
-      <div layout="row">
+      <div layout="row" layout-align="center center">
         <md-button class="md-raised" ng-class="buttonClass" ng-click="buttonAction(buttonText)" ng-disabled="!isReady">{{buttonText}}</md-button>
-        <span style="margin-left:36px;" class="game-timer" ng-class="{LessThan10SecondsLeft:pulsateColor}">
+        <span style="margin-left:16px;" class="game-timer" ng-class="LessThan10SecondsLeft ? 'pulsateColor' : ''">
           {{timeLeft | date: 'mm:ss'}}
         </span>
       </div>
       <div layout="row">
-        <md-button ng-click="goToMenu()" >Config</md-button>
+        <md-button ng-click="goToMenu()">Settings</md-button>
       </div>
     </md-card-content>
   </md-card>

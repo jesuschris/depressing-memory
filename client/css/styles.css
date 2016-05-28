@@ -194,27 +194,25 @@ html, body{
 }
 
 .pulsateColor {
-  -webkit-animation: pulsateColorAnim 1.5s infinite;
-  -webkit-animation-timing-function: linear;
-  -ms-animation: pulsateColorAnim 1.5s infinite;
-  -ms-animation-timing-function: linear;
-  animation: pulsateColorAnim 1.5s infinite;
-  animation-timing-function: linear;
+  -webkit-animation: pulsateColorAnim 1s infinite ease;
+  -ms-animation: pulsateColorAnim 1s infinite ease;
+  animation: pulsateColorAnim 1s infinite ease;
 }
+
 @-webkit-keyframes pulsateColorAnim {
-  0% { color: white; }
-  50%{ color: rgb(104,92,130); }
-  100% { color: white; }
+  0% { color: black; }
+  50% { color: red; }
+  100% { color: black; }
 }
 @-ms-keyframes pulsateColorAnim {
-  0% { color: white; }
-  50%{ color: rgb(104,92,130); }
-  100% { color: white; }
+  0% { color: black; }
+  50% { color: red; }
+  100% { color: black; }
 }
 @keyframes pulsateColorAnim {
-  0% { color: white; }
-  50%{ color: rgb(104,92,130); }
-  100% { color: white; }
+  0% { color: black; }
+  50% { color: red; }
+  100% { color: black; }
 }
 
 /*
